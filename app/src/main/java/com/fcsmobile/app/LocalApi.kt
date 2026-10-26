@@ -57,8 +57,8 @@ class LocalApi(context: Context) : Closeable {
         return execute(builder.build())
     }
     @OptIn(ExperimentalCoroutinesApi::class)
-    private suspend fun response(request: Request, transport: OkHttpClient = client): Response = suspendCancellableCoroutine { continuation ->
-        val call = transport.newCall(request)
+    private suspend fun response(request: Request): Response = suspendCancellableCoroutine { continuation ->
+        val call = client.newCall(request)
         continuation.invokeOnCancellation { call.cancel() }
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {

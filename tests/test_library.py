@@ -58,8 +58,38 @@ class LibraryTests(unittest.TestCase):
         self.assertEqual(self.client.get("/", headers={"Host": "example.com"}).status_code, 403)
 
     def test_admin_page_and_health(self):
-        self.assertIn(b"FCS Mobile", self.client.get("/").data)
+        response = self.client.get("/")
+        self.assertIn(b"FCS Mobile", response.data)
+        self.assertEqual(response.headers["Cache-Control"], "no-store")
+        self.assertEqual(response.headers["X-Frame-Options"], "DENY")
         self.assertEqual(self.client.get("/health").json["protocol"], 2)
+
+    def test_all_media_routes_reject_unauthorized_or_public_requests(self):
+        media_id = self.upload().json["id"]
+        routes = [("GET", "/api/status"), ("GET", "/api/media"),
+                  ("POST", "/api/check"), ("POST", "/api/upload")]
+        routes += [("GET", f"/api/media/{media_id}/{suffix}")
+                   for suffix in ("original", "thumbnail", "preview", "neighbors")]
+        routes += [("POST", f"/api/media/{media_id}/{suffix}") for suffix in ("trash", "restore")]
+        before = self.library.stats()
+        for method, path in routes:
+            with self.subTest(method=method, path=path):
+                self.assertEqual(self.client.open(path, method=method).status_code, 401)
+                self.assertEqual(self.client.open(path, method=method,
+                    headers={"Authorization": "Bearer invalid"}).status_code, 401)
+                self.assertEqual(self.client.open(path, method=method, headers=self.headers,
+                    environ_overrides={"REMOTE_ADDR": "8.8.8.8"}).status_code, 403)
+        self.assertEqual(self.library.stats(), before)
+
+    def test_forwarded_headers_cannot_bypass_network_or_admin_restrictions(self):
+        headers = {**self.headers, "X-Forwarded-For": "127.0.0.1", "X-Real-IP": "127.0.0.1"}
+        for path in ("/", "/api/status"):
+            with self.subTest(path=path):
+                response = self.client.get(path, headers=headers, environ_overrides={"REMOTE_ADDR": "8.8.8.8"})
+                self.assertEqual(response.status_code, 403)
+        response = self.client.get("/", headers={"Host": "127.0.0.1:5001"},
+                                   environ_overrides={"REMOTE_ADDR": "192.168.1.20"})
+        self.assertEqual(response.status_code, 403)
 
     def test_verified_upload_and_original(self):
         response = self.upload()
@@ -93,7 +123,7 @@ class LibraryTests(unittest.TestCase):
         self.assertEqual(self.library.stats()["media_count"], 0)
         self.assertEqual(list((self.library.internal / "incoming").iterdir()), [])
 
-    def test_check_never_quarantines_absent_files(self):
+    def test_inventory_check_preserves_unlisted_archives(self):
         self.upload()
         response = self.client.post("/api/check", json={"sha256": []}, headers=self.headers)
         self.assertEqual(response.status_code, 200)

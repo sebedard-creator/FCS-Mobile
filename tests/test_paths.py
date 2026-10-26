@@ -1,4 +1,4 @@
-"""Keep configuration, uploads and archives off the Windows system drive."""
+"""Validate local storage defaults and the explicit C: opt-in without writing to C:."""
 import json
 import os
 import shutil
@@ -35,6 +35,7 @@ class StorageTests(unittest.TestCase):
         self.assertEqual(json.loads((relocated / "config/config.json").read_text())["api_key"], config["api_key"])
 
     @unittest.skipUnless(os.name == "nt", "Windows drive validation")
+    @patch.dict(os.environ, {"FCS_MOBILE_ALLOW_C_DRIVE": "0"})
     def test_c_drive_is_rejected_before_writing(self):
         for operation in (storage_path, Library, create_app):
             with self.subTest(operation=operation.__name__), self.assertRaisesRegex(ValueError, "C:"):
@@ -45,6 +46,16 @@ class StorageTests(unittest.TestCase):
         config_file.write_text(json.dumps({"backup_path": "C:/FCSMobileForbiddenStorage", "api_key": "test"}))
         with self.assertRaisesRegex(ValueError, "C:"):
             create_app(config_dir)
+
+    @unittest.skipUnless(os.name == "nt", "Windows drive validation")
+    def test_c_drive_requires_exact_opt_in_without_writing(self):
+        candidate = Path("C:/FCSMobileStorageValidationOnly")
+        for value in ("", "0", "true", "yes"):
+            with self.subTest(value=value), patch.dict(os.environ, {"FCS_MOBILE_ALLOW_C_DRIVE": value}):
+                with self.assertRaisesRegex(ValueError, "C:"):
+                    storage_path(candidate)
+        with patch.dict(os.environ, {"FCS_MOBILE_ALLOW_C_DRIVE": "1"}):
+            self.assertEqual(storage_path(candidate), candidate)
 
     def test_large_upload_spills_into_local_temp(self):
         app = create_app(self.root / "config")

@@ -1,4 +1,4 @@
-"""Project-local storage, with no fallback to the Windows system drive."""
+"""Project-local storage; C: requires explicit administrator opt-in."""
 import os
 import tempfile
 from pathlib import Path
@@ -11,8 +11,8 @@ def storage_path(value, relative_to=DATA_ROOT):
     if not path.is_absolute():
         path = Path(relative_to) / path
     path = path.resolve()
-    if path.drive.casefold() == "c:":
-        raise ValueError("Le stockage sur C: est interdit pour FCS Mobile. Choisir un dossier sur Y:.")
+    if path.drive.casefold() == "c:" and os.environ.get("FCS_MOBILE_ALLOW_C_DRIVE", "").strip() != "1":
+        raise ValueError("Le stockage sur C: est interdit par défaut. Choisir un autre disque ou définir FCS_MOBILE_ALLOW_C_DRIVE=1.")
     return path
 
 

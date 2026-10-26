@@ -11,8 +11,8 @@ android {
         applicationId = "com.fcsmobile.app"
         minSdk = 31
         targetSdk = 34
-        versionCode = 13
-        versionName = "2.8.1"
+        versionCode = 14
+        versionName = "2.8.2"
     }
 
     compileOptions {
@@ -31,10 +31,10 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-ktx:1.8.1")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
-    
+
     // OkHttp for file uploads
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    
+
     // Kotlin coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
 

@@ -78,6 +78,10 @@ The Android client uses Kotlin, AppCompat, WorkManager, OkHttp, and Media3. The 
 | [Contributing](CONTRIBUTING.md) | Development setup, tests, and publishing practices |
 | [Changelog](changelog.md) | Version history and validation notes |
 
+## License
+
+FCS Mobile is licensed under the [MIT License](LICENSE).
+
 ---
 
 The software interface is in **French**.

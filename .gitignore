@@ -1,6 +1,8 @@
 # Secrets and local configuration (files and directories)
 .env
 .env.*
+.envrc
+.envrc.*
 *.env
 .venv/
 venv/
@@ -39,6 +41,7 @@ credentials/
 *.pem
 *.p12
 *.pfx
+*.p8
 *.jks
 *.keystore
 id_rsa
@@ -95,7 +98,14 @@ __pycache__/
 *.py[cod]
 *.egg-info/
 .gradle/
+.kotlin/
+.android/
 .idea/
+.ruff_cache/
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
 build/
 dist/
 *.apk

@@ -13,6 +13,9 @@ $logPath = Join-Path $statePath 'logs'
 $env:TEMP = Join-Path $statePath 'tmp'
 $env:TMP = $env:TEMP
 $env:PIP_CACHE_DIR = Join-Path $statePath 'cache\pip'
+if ([IO.Path]::GetPathRoot([IO.Path]::GetFullPath($PSScriptRoot)) -ieq 'C:\' -and $env:FCS_MOBILE_ALLOW_C_DRIVE -ne '1') {
+    throw 'Le stockage sur C: est interdit par défaut. Choisir un autre disque ou définir FCS_MOBILE_ALLOW_C_DRIVE=1.'
+}
 New-Item -ItemType Directory -Path $env:TEMP -Force | Out-Null
 $powershellPath = Join-Path $env:SystemRoot 'System32\WindowsPowerShell\v1.0\powershell.exe'
 
@@ -23,6 +26,8 @@ function Initialize-Runtime {
     }
     & $pythonPath -c "import sys; sys.exit(0 if sys.version_info >= (3, 11) else 1)"
     if ($LASTEXITCODE -ne 0) { throw 'Python 3.11 ou plus récent est requis. Recréer le venv .env avec cette version.' }
+    & $pythonPath -m pip install --upgrade 'pip>=26.2' 'setuptools>=84.1.0'
+    if ($LASTEXITCODE -ne 0) { throw 'Échec de la mise à jour des outils Python.' }
     & $pythonPath -m pip install -r (Join-Path $PSScriptRoot 'requirements.txt')
     if ($LASTEXITCODE -ne 0) { throw "Échec de l'installation des dépendances." }
 }

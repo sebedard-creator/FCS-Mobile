@@ -9,7 +9,7 @@ Start here
 
 Requirements
   Windows, Python 3.11+, Android 12+, local Wi-Fi.
-  The current server requires writable storage outside C:.
+  Writable storage is required. C: needs explicit FCS_MOBILE_ALLOW_C_DRIVE=1 opt-in.
   Android source builds use JDK 17 and the SDK packages listed in SETUP_GUIDE.md.
 
 From the project folder

@@ -46,7 +46,7 @@ Defaults are relative to the project:
 | `data/tmp/` | Process and upload temporary files |
 | `data/logs/` | Standalone launcher output |
 
-`backup_path` may be absolute or relative to `data/`. A complete library move must retain both `Originals` and `.fcs`. Current Windows storage validation rejects resolved paths on `C:`.
+`backup_path` may be absolute or relative to `data/`. A complete library move must retain both `Originals` and `.fcs`. Windows storage validation rejects resolved paths on `C:` unless the server process explicitly receives `FCS_MOBILE_ALLOW_C_DRIVE=1`. The PowerShell launcher checks this policy before creating project data directories.
 
 Archive deletion is logical for 30 days. Purge runs at startup and hourly while the server is running. It removes original bytes and derivatives while retaining deletion fingerprints to block automatic re-upload.
 
@@ -69,7 +69,7 @@ Protocol version: **2**.
 | `POST /api/media/<id>/trash` or `/restore` | Explicit archive actions |
 | `GET /` and `POST /admin/config` | Loopback-only administration and CSRF-protected configuration |
 
-API calls use `Authorization: Bearer …`. Source-network checks do not trust proxy headers. Responses use `Cache-Control: no-store`. The Android client accepts private IPv4 destinations, binds sockets to Wi-Fi, and disables proxies and redirects.
+API calls use `Authorization: Bearer …`. Source-network checks do not trust proxy headers. Responses use `Cache-Control: no-store`; administration cannot be embedded in another site's frame. The Android client accepts private IPv4 destinations, binds sockets to Wi-Fi, and disables proxies and redirects. Android extraction rules exclude private app data from cloud backup and device-to-device transfer.
 
 The transport is HTTP on the local network. HTTPS, public hosting, reverse-proxy deployment, and mobile-data access are outside the supported scope.
 

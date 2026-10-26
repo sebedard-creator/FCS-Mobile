@@ -2,6 +2,22 @@
 
 Product changes are listed newest first. For current installation steps, see the [installation guide](SETUP_GUIDE.md).
 
+## 2.8.2 — 2026-10-26
+
+### Security
+
+- Upgrade Pillow to 13.0.0 for upstream security fixes.
+- Update Python packaging tools during setup to avoid known vulnerabilities in older bootstrap versions.
+- Explicitly exclude app credentials and private data from Android cloud backups and device transfers.
+- Prevent the local administration page from being embedded in another site's frame.
+- Pin the Gradle distribution checksum and exclude additional credential and generated-file types from Git.
+
+### Changed
+
+- Allow storage on C: through an explicit environment option; keep it blocked by default and document setup for other installations.
+- Remove an unused private HTTP transport parameter.
+- Add regression coverage for all protected media routes and spoofed forwarding headers.
+
 ## 2.8.1 — 2026-10-26
 
 ### Fixed

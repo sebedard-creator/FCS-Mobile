@@ -15,6 +15,7 @@ from .paths import DATA_ROOT, storage_path
 
 
 class LocalUploadRequest(Request):
+    # Werkzeug passes this callback's metadata arguments by name.
     def _get_file_stream(self, total_content_length, content_type, filename=None, content_length=None):
         return tempfile.SpooledTemporaryFile(max_size=512 * 1024, mode="rb+", dir=current_app.config["UPLOAD_TEMP_PATH"])
 
@@ -88,6 +89,7 @@ def create_app(config_dir=None, library_path=None):
         response.headers["Cache-Control"] = "no-store"
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["Referrer-Policy"] = "no-referrer"
+        response.headers["X-Frame-Options"] = "DENY"
         return response
 
     @app.errorhandler(Exception)

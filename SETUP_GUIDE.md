@@ -11,10 +11,10 @@ This guide starts from a fresh GitHub source checkout and uses the scripts inclu
 | Server | Windows and [Python 3.11 or later](https://www.python.org/downloads/windows/) |
 | Phone | Android 12 or later |
 | Network | Local Wi-Fi through which the phone can reach the PC |
-| Storage | A writable project and library location outside `C:` |
+| Storage | A writable project and library location; `C:` requires explicit opt-in |
 | Android source build | JDK 17, Android SDK Platform 34, Build-Tools 33.0.1, and Platform-Tools |
 
-**Current limitation:** the server rejects storage on `C:`. Any other writable drive letter may be used; no particular folder name or drive letter is required. Windows is the supported server platform.
+By default, the server rejects storage on `C:`. Any other writable drive letter may be used; no particular folder name or drive letter is required. Windows is the supported server platform.
 
 The repository contains source code. Python environments, local settings, signing keys, and generated APKs are created locally and are not included in a source checkout.
 
@@ -23,6 +23,17 @@ The repository contains source code. Python environments, local settings, signin
 On the GitHub repository page, choose **Code → Download ZIP**, then extract it. Alternatively, clone the repository using its displayed Git URL.
 
 Open PowerShell in the extracted project folder, where `setup.bat` and `backup_service.py` are located. Run all commands below from that folder.
+
+### Optional: allow storage on C:
+
+If you intentionally want to install the project or store its library on `C:`, enable this option **before setup**:
+
+```powershell
+$env:FCS_MOBILE_ALLOW_C_DRIVE = '1'
+[Environment]::SetEnvironmentVariable('FCS_MOBILE_ALLOW_C_DRIVE', '1', 'User')
+```
+
+The first command enables it in the current terminal; the second preserves it for future sessions under your Windows account. Restart any external process manager before launching the server so it receives the updated environment. To restore the default restriction, remove the variable from the current session and your user environment, then restart the server. This option permits `C:`; it does not move existing data or change the default library path.
 
 ## 2. Install and start the server
 
@@ -39,7 +50,7 @@ Prepare the environment and start the server:
 .\launch_service.bat
 ```
 
-The setup creates `.env/` and installs `requirements.txt`. The launcher starts a background server; its log is `data/logs/server.log`. Internet access is required to download dependencies during setup.
+The setup creates `.env/`, updates the Python packaging tools, and installs `requirements.txt`. The launcher starts a background server; its log is `data/logs/server.log`. Internet access is required to download dependencies during setup.
 
 Open **[http://127.0.0.1:5001/](http://127.0.0.1:5001/)** on the PC. Confirm the library folder and read the newly generated connection key. Keep this key private.
 
@@ -108,6 +119,8 @@ The application ID is `com.fcsmobile.app`. Once installed:
 5. Exclude any media folders you do not want to archive.
 6. Connect the phone to local Wi-Fi and plug it into power.
 
+Connection settings are intentionally excluded from Android system backups and device transfers. Configure the connection again when setting up a new phone.
+
 The first backup archives accessible existing media. Automatic and manual transfers require connected power and a reachable local server. Android decides when background work starts; plugging in does not guarantee an immediate run. Battery protection may pause charging while the phone remains connected to power.
 
 ## 6. Confirm the installation
@@ -150,7 +163,7 @@ If you move the project itself, update startup paths and recreate the Python env
 | `python` is not recognized | Install Python, make it available on PATH, and reopen PowerShell |
 | Dependency installation fails | Read the terminal error, confirm the Python version and Internet access; Python 3.11 is the baseline for reproducing dependency issues |
 | Server does not open | Inspect `data/logs/server.log` and check whether port 5001 is already in use |
-| Storage error mentioning `C:` | Move the project and library to another writable drive |
+| Storage error mentioning `C:` | Use another writable drive, or explicitly enable `FCS_MOBILE_ALLOW_C_DRIVE=1` before setup and server startup |
 | Phone cannot connect | PC LAN address, key, server status, Private firewall rule, and Wi-Fi isolation |
 | Build cannot find Java or the SDK | Check `JAVA_HOME`, `ANDROID_HOME`, the SDK packages, and accepted licenses |
 | APK update is rejected | Match the existing application ID and signing key |

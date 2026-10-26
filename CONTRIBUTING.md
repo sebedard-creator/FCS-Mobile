@@ -8,7 +8,7 @@ Use a source checkout and generate your own environment, configuration, and sign
 
 Follow the [installation guide](SETUP_GUIDE.md) for Python, the Android SDK, JDK 17, and project-local build caches. Server and Android dependencies are declared in `requirements.txt` and the Gradle build files.
 
-The server is supported on Windows. Current path validation requires storage outside `C:`. Android requires API 31 or later and compiles against SDK 34. Use the included Gradle wrapper.
+The server is supported on Windows. Storage on `C:` requires the explicit opt-in described in [the installation guide](SETUP_GUIDE.md#optional-allow-storage-on-c). Android requires API 31 or later and compiles against SDK 34. Use the included Gradle wrapper.
 
 ## Validate changes
 
