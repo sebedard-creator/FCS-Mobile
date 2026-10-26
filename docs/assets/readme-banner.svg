@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="440" viewBox="0 0 1440 440" role="img" aria-labelledby="title desc">
+  <title id="title">FCS Mobile — Your photos, stored on your PC</title>
+  <desc id="desc">A graphite and blue banner illustrating a photo library connected to a local computer.</desc>
+  <defs>
+    <clipPath id="bounds"><rect width="1440" height="440" rx="28"/></clipPath>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#181f2b"/><stop offset="1" stop-color="#0f131b"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#263d5c"/><stop offset="1" stop-color="#1a2739"/>
+    </linearGradient>
+  </defs>
+  <rect width="1440" height="440" rx="28" fill="url(#background)"/>
+  <path d="M1010 0h430v440h-430" fill="#152132" opacity=".5" clip-path="url(#bounds)"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <text x="64" y="79" fill="#a9c7ff" font-size="16" font-weight="600" letter-spacing="3">FCS MOBILE</text>
+    <text x="60" y="166" fill="#f1f5fb" font-size="57" font-weight="600">Your photos.</text>
+    <text x="60" y="238" fill="#f1f5fb" font-size="57" font-weight="600">Stored on your PC.</text>
+    <text x="64" y="302" fill="#a6b3c7" font-size="23">An Android gallery with a permanent local archive.</text>
+    <rect x="64" y="348" width="133" height="34" rx="17" fill="#233854"/>
+    <text x="130" y="371" fill="#c4d9ff" font-size="15" text-anchor="middle">Local Wi-Fi</text>
+    <rect x="209" y="348" width="143" height="34" rx="17" fill="#233854"/>
+    <text x="280" y="371" fill="#c4d9ff" font-size="15" text-anchor="middle">Your storage</text>
+    <rect x="364" y="348" width="156" height="34" rx="17" fill="#233854"/>
+    <text x="442" y="371" fill="#c4d9ff" font-size="15" text-anchor="middle">No cloud account</text>
+  </g>
+  <rect x="883" y="102" width="180" height="238" rx="24" fill="url(#panel)" stroke="#3e5779" stroke-width="2"/>
+  <path d="M950 121h46" stroke="#57708f" stroke-width="4" stroke-linecap="round"/>
+  <rect x="912" y="157" width="122" height="112" rx="12" fill="none" stroke="#a9c7ff" stroke-width="4"/>
+  <path d="m913 246 36-44 33 37 21-25 30 32" fill="none" stroke="#a9c7ff" stroke-width="4" stroke-linejoin="round"/>
+  <circle cx="1003" cy="183" r="9" fill="#a9c7ff"/>
+  <path d="M953 317h40" stroke="#57708f" stroke-width="4" stroke-linecap="round"/>
+  <path d="M1081 217h53" stroke="#6c8cb9" stroke-width="2" stroke-dasharray="5 6"/>
+  <circle cx="1108" cy="217" r="13" fill="#233854"/>
+  <circle cx="1108" cy="217" r="4" fill="#a9c7ff"/>
+  <rect x="1153" y="151" width="181" height="124" rx="12" fill="#182434" stroke="#7898c1" stroke-width="3"/>
+  <path d="M1220 276v26m-25 1h75" stroke="#7898c1" stroke-width="4" stroke-linecap="round"/>
+  <path d="M1205 198h77m-77 16h56m-56 16h67" stroke="#a9c7ff" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="1318" cy="260" r="3" fill="#a9c7ff"/>
+</svg>

@@ -1,0 +1,15 @@
+<resources>
+    <color name="app_background">#0F131B</color>
+    <color name="app_surface">#181F2B</color>
+    <color name="app_surface_raised">#222C3B</color>
+    <color name="app_border">#334155</color>
+    <color name="app_text">#F1F5FB</color>
+    <color name="app_text_muted">#A6B3C7</color>
+    <color name="app_accent">#A9C7FF</color>
+    <color name="app_accent_container">#233854</color>
+    <color name="app_on_accent">#102039</color>
+    <color name="app_danger">#FFB4AB</color>
+    <color name="app_ripple">#25A9C7FF</color>
+    <color name="app_media_caption">#D9101620</color>
+    <color name="launcher_background">@color/app_background</color>
+</resources>

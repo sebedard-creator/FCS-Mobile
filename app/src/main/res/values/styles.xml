@@ -1,0 +1,30 @@
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:statusBarColor">@color/app_background</item>
+        <item name="android:navigationBarColor">@color/app_background</item>
+        <item name="android:windowBackground">@color/app_background</item>
+        <item name="android:colorBackground">@color/app_background</item>
+        <item name="colorPrimary">@color/app_surface</item>
+        <item name="colorPrimaryDark">@color/app_background</item>
+        <item name="colorAccent">@color/app_accent</item>
+        <item name="colorControlNormal">@color/app_text_muted</item>
+        <item name="colorControlActivated">@color/app_accent</item>
+        <item name="colorControlHighlight">@color/app_ripple</item>
+        <item name="colorButtonNormal">@color/app_surface_raised</item>
+        <item name="android:textColorPrimary">@color/app_text</item>
+        <item name="android:textColorSecondary">@color/app_text_muted</item>
+        <item name="android:textColorHint">@color/app_text_muted</item>
+        <item name="android:colorEdgeEffect">@color/app_accent</item>
+        <item name="alertDialogTheme">@style/AppDialogTheme</item>
+    </style>
+    <style name="AppDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorAccent">@color/app_accent</item>
+        <item name="android:colorBackground">@color/app_surface</item>
+        <item name="android:textColorPrimary">@color/app_text</item>
+        <item name="android:textColorSecondary">@color/app_text_muted</item>
+        <item name="colorControlActivated">@color/app_accent</item>
+    </style>
+</resources>

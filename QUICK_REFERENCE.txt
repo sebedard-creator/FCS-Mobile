@@ -1,0 +1,49 @@
+FCS Mobile — Quick reference
+
+Start here
+  SETUP_GUIDE.md          Fresh installation from a GitHub source checkout
+  docs/README.md          Documentation index
+  CONTRIBUTING.md        Development and validation
+  architecture.md        Components and API
+  changelog.md           Version history
+
+Requirements
+  Windows, Python 3.11+, Android 12+, local Wi-Fi.
+  The current server requires writable storage outside C:.
+  Android source builds use JDK 17 and the SDK packages listed in SETUP_GUIDE.md.
+
+From the project folder
+  setup.bat              Create the Python environment and install dependencies
+  launch_service.bat     Start the background server
+  stop.bat               Stop the server
+  install_service.bat    Optional startup at Windows sign-in
+  uninstall_service.bat  Remove startup and stop the server; keep the library
+
+Connection
+  Administration on PC: http://127.0.0.1:5001/
+  Phone: PC private IPv4 address and generated connection key.
+  Firewall: TCP 5001 on the Private network profile.
+  The PC must remain on with the service running.
+
+Data, relative to the project
+  data/library/Originals  Archived media
+  data/library/.fcs      Catalog and derivatives
+  data/config            Private configuration and connection key
+  data/logs/server.log   Standalone service output
+  Preserve the entire library when moving or copying it.
+
+Android
+  APK build output: app/build/outputs/apk/debug/app-debug.apk
+  Application ID: com.fcsmobile.app
+  APKs and signing keys are generated locally, not included in source checkouts.
+  Backup requires connected power, local Wi-Fi, and full media permissions.
+
+Daily use
+  Gallery/trash: pull down at the top to refresh; pagination is automatic.
+  Viewer: swipe left for next, right for previous.
+  Backup: progress in the app and a silent Android notification.
+  Trash: restore within 30 days before automatic cleanup.
+  Deleting a phone file does not delete its archive.
+
+Tests
+  .env\Scripts\python.exe -B -m unittest discover -s tests -v
